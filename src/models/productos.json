@@ -1,0 +1,122 @@
+[
+  {
+    "title": "Mate",
+    "description": "yerba mate la merced",
+    "price": "2500",
+    "img": "Sin Imagen",
+    "code": "a01",
+    "stock": "1000",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 1
+  },
+  {
+    "title": "Cafe",
+    "description": "cafe cinco hispanos",
+    "price": "6500",
+    "img": "Sin Imagen",
+    "code": "a02",
+    "stock": "300",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 2
+  },
+  {
+    "title": "Harina",
+    "description": "000 Molinos",
+    "price": "1500",
+    "img": "Sin Imagen",
+    "code": "a03",
+    "stock": "200",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 3
+  },
+  {
+    "title": "Palmitos",
+    "description": "palmitos marolio",
+    "price": "2500",
+    "img": "Sin Imagen",
+    "code": "a04",
+    "stock": "100",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 4
+  },
+  {
+    "title": "Mermelada",
+    "description": "mermelada frutilla BC",
+    "price": "2300",
+    "img": "Sin Imagen",
+    "code": "a05",
+    "stock": "150",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 5
+  },
+  {
+    "title": "Cacao",
+    "description": "cacao en polvo",
+    "price": "5500",
+    "img": "Sin Imagen",
+    "code": "a06",
+    "stock": "30",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 6
+  },
+  {
+    "title": "Picadillo",
+    "description": "pate de picadillo",
+    "price": "1500",
+    "img": "Sin Imagen",
+    "code": "a07",
+    "stock": "230",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 7
+  },
+  {
+    "title": "Caballa",
+    "description": "caballa desmenuzada",
+    "price": "8500",
+    "img": "Sin Imagen",
+    "code": "a08",
+    "stock": "120",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 8
+  },
+  {
+    "title": "Arroz",
+    "description": "arroz integral",
+    "price": "1800",
+    "img": "Sin Imagen",
+    "code": "a09",
+    "stock": "350",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 9
+  },
+  {
+    "title": "Lentejas",
+    "description": "lentejon nacional",
+    "price": "6200",
+    "img": "Sin Imagen",
+    "code": "a10",
+    "stock": "520",
+    "category": "Almacen",
+    "status": true,
+    "thumbnails": [],
+    "id": 10
+  }
+]
