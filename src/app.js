@@ -8,7 +8,7 @@ const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
 const ProductManager = require("./controllers/product-manager.js");
 const productManager = new ProductManager("./src/models/productos.json");
-const io = socket(server);
+
 
 //MIDDLEWARES
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +26,11 @@ app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 //---------------------------------------------------------
 
+const server = app.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto http://localhost:${PORT}`);
+});
+
+const io = socket(server);
 
 io.on("connection", async (socket) => {
     console.log("Cliente nuevo conectado exitosamente");
@@ -39,11 +44,6 @@ io.on("connection", async (socket) => {
         await productManager.addProduct(producto);
         io.sockets.emit("productos", await productManager.getProducts());
     });
-});
-
-
-const server = app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto http://localhost:${PORT}`);
 });
 
 

@@ -96,27 +96,15 @@
     "id": 8
   },
   {
-    "title": "Arroz",
-    "description": "arroz integral",
-    "price": "1800",
+    "title": "papa",
+    "description": "papita",
+    "price": "2000",
     "img": "Sin Imagen",
-    "code": "a09",
-    "stock": "350",
-    "category": "Almacen",
+    "code": "a022",
+    "stock": "2345",
+    "category": "verduleria",
     "status": true,
     "thumbnails": [],
     "id": 9
-  },
-  {
-    "title": "Lentejas",
-    "description": "lentejon nacional",
-    "price": "6200",
-    "img": "Sin Imagen",
-    "code": "a10",
-    "stock": "520",
-    "category": "Almacen",
-    "status": true,
-    "thumbnails": [],
-    "id": 10
   }
 ]

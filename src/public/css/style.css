@@ -1,0 +1,108 @@
+body{
+    background-color: rgb(176, 176, 176)
+}
+
+h1 {
+    font-family: 'Georgia';
+    padding: 50px;
+    color:blue;
+    text-shadow: 3px 3px 2px yellow;
+    text-align: center;
+}
+
+.conteinerCards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    height: 160px;
+    width: 120px;
+    background-color: #ececec;
+    border: 1px solid grey;
+    border-radius: 2px;
+    margin: 10px;
+    padding: 10px;
+    min-width: 200px;
+}
+
+.card button{
+    display: flex;
+    margin: auto;
+    position: relative;
+    transition: .3s linear;
+    cursor: pointer;
+
+}
+
+.btn:hover {
+    background-color: green;
+    box-shadow: 0 0 5px green, 0 0 25px green, 0 0 50px green;
+    color:white
+}
+
+.boquita {
+    display: flex;
+    margin: auto;
+    padding-bottom: 30px;
+    padding-top: 15px;
+}
+
+.boquitaP {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.358);
+    width: 300px;
+    margin: auto;
+    border: 2px dashed ;
+    border-image: linear-gradient(to right, yellow, blue);
+    border-image-slice: 1;
+}
+
+.boquitaP p {
+    text-align: center;
+}
+
+/* realtimeproducts */
+
+
+h2 {
+    border-top: 2px solid black;
+    text-align: center;
+}
+
+.conteinerCardsRealTime{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+.conteinerCardsRealTime button{
+    display: flex;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.cardRealTime {
+    height: 250px;
+    width: 120px;
+    background-color: #ececec;
+    border: 1px solid grey;
+    border-radius: 2px;
+    margin: 10px;
+    padding: 10px;
+    min-width: 200px;
+}
+
+.cardRealTime p {
+    font-size: 12px;
+}
+
+.pRuta{
+    font-size: 20px;
+    text-align: center;
+    background-color: rgb(236, 238, 130);
+}

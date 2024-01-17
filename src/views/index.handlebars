@@ -1,0 +1,22 @@
+<h1>Mis productos</h1>
+
+<div class="boquitaP">
+    <p> Antes de comenzar tus compras,<br> Te recomendamos darle play <br> para una mejor experiencia.<br>😎 </p>
+</div>
+<audio class='boquita' controls src="/audio/boca.mp3">
+   <source src="/audio/boca.mp3">
+</audio>
+
+<div class="conteinerCards">
+    {{#each productos}}
+    <div class="card">
+        <p><b>Titulo:</b> {{this.title}} </p>
+        <p><b>Descripcion:</b> {{this.description}} </p>
+        <p><b>Precio: $</b>{{this.price}} </p>
+        <button class="btn">Comprar!😀</button>
+    </div>
+    {{/each}}
+</div>
+
+<p class="pRuta">Para agregar un producto en tiempo real, utiliza la ruta: <b>/realtimeproducts</b></p>
+
