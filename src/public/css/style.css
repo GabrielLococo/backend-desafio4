@@ -1,13 +1,26 @@
-body{
-    background-color: rgb(176, 176, 176)
+.logo img{
+    border-radius: 50%;
 }
+
+.banner {
+    background-image: url(../assets/marolio-banner.jpg);
+    background-position:center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    height: 300px;
+    display: flex;
+}
+
 
 h1 {
     font-family: 'Georgia';
-    padding: 50px;
-    color:blue;
-    text-shadow: 3px 3px 2px yellow;
-    text-align: center;
+    text-shadow: 4px 4px 2px rgb(255, 255, 255);
+    font-size: 30px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin: auto;
+    
 }
 
 .conteinerCards {
@@ -43,27 +56,7 @@ h1 {
     color:white
 }
 
-.boquita {
-    display: flex;
-    margin: auto;
-    padding-bottom: 30px;
-    padding-top: 15px;
-}
 
-.boquitaP {
-    display: flex;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.358);
-    width: 300px;
-    margin: auto;
-    border: 2px dashed ;
-    border-image: linear-gradient(to right, yellow, blue);
-    border-image-slice: 1;
-}
-
-.boquitaP p {
-    text-align: center;
-}
 
 /* realtimeproducts */
 
@@ -87,7 +80,10 @@ h2 {
 }
 
 .cardRealTime {
-    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 350px;
     width: 120px;
     background-color: #ececec;
     border: 1px solid grey;
@@ -95,14 +91,18 @@ h2 {
     margin: 10px;
     padding: 10px;
     min-width: 200px;
+  
 }
 
 .cardRealTime p {
     font-size: 12px;
 }
 
+
+
 .pRuta{
     font-size: 20px;
     text-align: center;
     background-color: rgb(236, 238, 130);
 }
+

@@ -15,7 +15,7 @@ const renderProductos = (productos) => {
         
         card.innerHTML =
          `
-                
+                <div>
                 <p><b>Id:</b> ${item.id} </p>
                 <p><b>Titulo:</b> ${item.title} </p>
                 <p><b>Descripcion:</b> ${item.description} </p>
@@ -23,8 +23,10 @@ const renderProductos = (productos) => {
                 <p><b>Codigo: </b> ${item.code} </p>
                 <p><b>Stock: </b>${item.stock} </p>
                 <p><b>Categoria: </b>${item.category}</p>
-                
-                <button> Eliminar Producto </button>
+                </div>
+                <div>
+                <button class="realTimeButton"> Eliminar Producto </button>
+                </div>
         `;
         contenedorProductos.appendChild(card);
 
