@@ -3,11 +3,11 @@ const app = express();
 const exphbs = require("express-handlebars");
 const socket = require("socket.io");
 const PORT = 8080;
+require('./database.js')
+
 const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
-const ProductManager = require("./controllers/product-manager.js");
-const productManager = new ProductManager("./src/models/productos.json");
 
 
 //MIDDLEWARES
@@ -26,24 +26,24 @@ app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 //---------------------------------------------------------
 
-const server = app.listen(PORT, () => {
+const httpServer = app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto http://localhost:${PORT}`);
 });
 
-const io = socket(server);
-
-io.on("connection", async (socket) => {
-    console.log("Cliente nuevo conectado exitosamente");
-
-    socket.emit("productos", await productManager.getProducts());    
-    socket.on("eliminarProducto", async (id) => {
-        await productManager.deleteProduct(id);
-        io.sockets.emit("productos", await productManager.getProducts());
-    });
-    socket.on("agregarProducto", async (producto) => {
-        await productManager.addProduct(producto);
-        io.sockets.emit("productos", await productManager.getProducts());
-    });
-});
+const MessageModel = require("./dao/models/message.model.js");
+const io = new socket.Server(httpServer);
 
 
+io.on("connection",  (socket) => {
+    console.log("Nuevo usuario conectado");
+
+    socket.on("message", async data => {
+
+        await MessageModel.create(data);
+
+        const messages = await MessageModel.find();
+        console.log(messages);
+        io.sockets.emit("message", messages);
+     
+    })
+})

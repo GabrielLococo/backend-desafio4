@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router(); 
-const ProductManager = require("../controllers/product-manager.js");
-const productManager = new ProductManager("./src/models/productos.json");
+const ProductManager = require("../dao/db/product-manager-db.js");
+const productManager = new ProductManager();
 
 //------------------------------
 
@@ -30,5 +30,17 @@ router.get("/realtimeproducts", async (req, res) => {
         });
     }
 })
+
+router.get("/chat", async (req, res) => {
+    try {
+        res.render("chat");
+    } catch (error) {
+        res.status(500).json({
+            error: "Error interno del servidor"
+        });
+    }
+})
+
+
 
 module.exports = router; 
