@@ -34,9 +34,7 @@ app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 //---------------------------------------------------------
 
-const httpServer = app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto http://localhost:${PORT}`);
-});
+
 
 const MessageModel = require("./dao/models/message.model.js");
 const io = new socket.Server(httpServer);
@@ -71,3 +69,8 @@ io.on("connection",  async (socket) => {
         io.sockets.emit("productos", await productManager.getProducts());
     });
 })
+
+
+const httpServer = app.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto http://localhost:${PORT}`);
+});
