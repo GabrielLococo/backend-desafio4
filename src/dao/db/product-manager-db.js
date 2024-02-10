@@ -1,15 +1,16 @@
 const ProductModel = require('../models/product.model.js')
 
 class ProductManager {
-    async addProduct({ title, description, price, img, code, stock, category, thumbnails }) {
+    async addProduct({ title, description, category, price, thumbnail, code, stock, status, thumbnails }) {
         try {
 
-            if (!title || !description || !price || !code || !stock || !category) {
+            if (!title || !description || !category || !price ||!thumbnail || !code || !stock || status == undefined || status == null) {
                 console.log("Todos los campos son obligatorios");
                 return;
             }
 
             const ProductExist = await ProductModel.findOne({ code: code })
+
             if (ProductExist) {
                 console.log('error: codigo preexistente, el codigo debe ser unico')
                 return
@@ -18,12 +19,12 @@ class ProductManager {
             const newProduct = new ProductModel({
                 title,
                 description,
+                category,
                 price,
-                img,
+                thumbnail,
                 code,
                 stock,
-                category,
-                status: true,
+                status,
                 thumbnails: thumbnails || []
             })
 
@@ -47,22 +48,22 @@ class ProductManager {
 
     async getProductById(id) {
         try {
-            const producto = await ProductModel.findById(id)
+            const foundProduct = await ProductModel.findById(id)
 
-            if (!producto) {
+            if (!foundProduct) {
                 console.log('error: producto no encontrado. ')
                 return null
             }
             console.log('producto encontrado!')
-            return producto
+            return foundProduct
         } catch (error) {
             console.log('error: no se pudo traer un producto por ir')
         }
     }
 
-    async updateProduct(id, productoActualizado) {
+    async updateProduct(id, updatedProduct) {
         try {
-            const updatingProduct = await ProductModel.findByIdAndUpdate(id, productoActualizado)
+            const updatingProduct = await ProductModel.findByIdAndUpdate(id, updatedProduct)
             if (!updatingProduct) {
                 console.log('error: no se encuentra el producto')
                 return null
@@ -89,6 +90,14 @@ class ProductManager {
         } catch (error) {
             console.log('error al eliminar el producto', error)
         }
+    }
+
+    async getProductsLimit(limit) {
+        const products = await ProductModel.find()
+        if (limit) {
+            return products.slice(0, limit)
+        }
+        return products
     }
 
 }
