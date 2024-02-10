@@ -43,6 +43,33 @@ const io = new socket.Server(httpServer);
 io.on("connection",  async (socket) => {
     console.log("Nuevo usuario conectado");
 
+    socket.emit("productos", await productManager.getProducts());    
+
+    //agregar producto
+
+    socket.on("addProduct", async (newproducto) => {
+        await productManager.addProduct(newproducto);
+        
+        io.sockets.emit("productos", await productManager.getProducts());
+    });
+
+    //actualizar producto
+
+    socket.on("updateProduct", async ({ id, updatedProduct }) => {
+        await productManager.updateProduct(id, updatedProduct)
+        io.sockets.emit("products", await productManager.getProducts())
+    })
+    
+    //eliminar producto
+    socket.on("deleteProduct", async (id) => {
+        await productManager.deleteProduct(id);
+       
+        io.sockets.emit("productos", await productManager.getProducts());
+    });
+
+
+     // Chat
+
     socket.on("message", async data => {
 
         await MessageModel.create(data);
@@ -52,22 +79,7 @@ io.on("connection",  async (socket) => {
         io.sockets.emit("message", messages);
      
     })
-
-    socket.emit("productos", await productManager.getProducts());    
     
-
-    socket.on("eliminarProducto", async (id) => {
-        await productManager.deleteProduct(id);
-       
-        io.sockets.emit("productos", await productManager.getProducts());
-    });
-
-    
-    socket.on("agregarProducto", async (producto) => {
-        await productManager.addProduct(producto);
-        
-        io.sockets.emit("productos", await productManager.getProducts());
-    });
 })
 
 
