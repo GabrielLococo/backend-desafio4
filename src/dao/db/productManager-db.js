@@ -1,4 +1,4 @@
-const ProductModel = require('../models/product.model.js')
+const ProductModel = require('../models/products.model.js')
 
 class ProductManager {
     async addProduct({ title, description, category, price, thumbnail, code, stock, status, thumbnails }) {
@@ -76,8 +76,7 @@ class ProductManager {
         }
     }
 
-    async deleteProduct () {
-
+    async deleteProduct (id) {
         try {
             const deletingProduct = await ProductModel.findByIdAndDelete(id)
 

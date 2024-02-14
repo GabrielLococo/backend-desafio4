@@ -1,43 +1,38 @@
-const express = require("express");
-const app = express();
-const exphbs = require("express-handlebars");
-const socket = require("socket.io");
-const PORT = 8080;
 require('./database.js')
-const ProductManager = require('./dao/db/product-manager-db.js')
-const productManager = new ProductManager('./src/models/products.model.js')
+const express = require('express')
+const http = require('http')
+const socketIo = require('socket.io')
+const expressHandlebars = require('express-handlebars')
+const ProductManager = require('./dao/db/productManager-db.js')
+const CartManager = require('./dao/db/cartManager-db.js')
+const MessageModel = require('./dao/models/message.model.js') //
+const app = express()
+const server = http.createServer(app)
+const io = socketIo(server)
+const PORT = 8080
+const productManager = new ProductManager()
+const cartManager = new CartManager()
 
-const productsRouter = require("./routes/products.router.js");
-const cartsRouter = require("./routes/carts.router.js");
-const viewsRouter = require("./routes/views.router.js");
+// Middleware
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
-
-//MIDDLEWARES
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static("./src/public"));
-
-//Configuracion motor y vistas HANDLEBARS
-const hbs = exphbs.create({
+// Handlebars
+const hbs = expressHandlebars.create({
     runtimeOptions: {
         allowProtoPropertiesByDefault: true,
         allowProtoMethodsByDefault: true,
     },
 })
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
-app.set("views", "./src/views");
 
-//Rutas
-app.use("/api/products", productsRouter);
-app.use("/api/carts", cartsRouter);
-app.use("/", viewsRouter);
-//---------------------------------------------------------
+app.engine('handlebars', hbs.engine)
+app.set('view engine', 'handlebars')
+app.set("views", "./src/views")
 
-
-
-const MessageModel = require("./dao/models/message.model.js");
-const io = new socket.Server(httpServer);
+app.use("/", require("./routes/views.router")(productManager, cartManager))
+app.use('/api/products', require('./routes/products.router')(productManager))
+app.use('/api/carts', require('./routes/cart.router.js')(cartManager, productManager))
+app.use(express.static('./src/public'))
 
 
 io.on("connection",  async (socket) => {
@@ -68,8 +63,7 @@ io.on("connection",  async (socket) => {
     });
 
 
-     // Chat
-
+    // Chat
     socket.on("message", async data => {
 
         await MessageModel.create(data);
@@ -82,7 +76,6 @@ io.on("connection",  async (socket) => {
     
 })
 
-
-const httpServer = app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto http://localhost:${PORT}`);
-});
+server.listen(PORT, () => {
+    console.log(`Escuchando en el servidor http://localhost:${PORT}`)
+})

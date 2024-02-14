@@ -106,3 +106,86 @@ h2 {
     background-color: rgb(236, 238, 130);
 }
 
+/*PRODUCTS*/
+
+/** -------------------- Products Page -------------------- **/
+
+.section_products,
+.section_cart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.section_cart {
+    align-items: flex-start;
+}
+
+.section_products h1,
+.section_cart h1 {
+    font-size: 4rem;
+    font-family: 'sf pro display';
+}
+
+.product_container {
+    display: flex;
+    gap: 2rem;
+}
+
+.button_detail a {
+    color: var(--clr-blue);
+    text-decoration: underline;
+}
+
+.prev-netxPage_buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.prev-netxPage_buttons a {
+    color: var(--clr-blue);
+    text-decoration: underline;
+}
+
+.prev_page_notEnabled {
+    color: var(--clr-grey);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.section_productDetail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.productDetail_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.addToCartBtn {
+    color: var(--clr-blue);
+    text-decoration: underline;
+}
+
+.cart_productList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+}

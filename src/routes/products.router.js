@@ -51,7 +51,8 @@ module.exports = (productManager) => {
             res.status(500).json({ error: 'Error en el servidor' })
         }
     })
-
+    //---------------------------------------------------------------
+    
     // GET
     router.get('/:pid', async (req, res) => {
         try {
