@@ -66,17 +66,6 @@ router.get('/products', async (req, res) => {
     }
 })
 
-//PRODUCT DETAIL
-router.get('/products/:productId', async (req, res) => {
-    try {
-        const productId = req.params.productId
-        const product = await productManager.getProductById(productId) 
-        res.render('productDetail', { title: 'Product Detail', product }) 
-    } catch (error) {
-        console.error('Error recibiendo detalles del producto', error)
-        res.status(500).json({ error: 'Error en el servidor' })
-    }
-})
 
 //CART
 router.get('/carts/:cid', async (req, res) => {
@@ -87,7 +76,7 @@ router.get('/carts/:cid', async (req, res) => {
             console.error('No existe carrito con ese ID')
             return cart
         }
-        res.render('carts', { cartId, products: cart.products, title: 'Cart' })
+        res.render('cart', { cartId, products: cart.products, title: 'Cart' })
 
     } catch (error) {
         console.error('Error recuperando carrito', error)

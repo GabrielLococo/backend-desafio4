@@ -2,9 +2,9 @@
     <h1>Lista de productos</h1>
     <ul>
         {{#each products }}
-        <div class="product_container">
+        <div >
             <li> {{this.title}} </li>
-            <button class="button_detail" type="button"><a href="http://localhost:8080/products/{{this._id}}">Comprar</a></button>
+            <button type="button"><a href="http://localhost:8080/products/{{this._id}}">Comprar</a></button>
         </div>
         {{/each}}
     </ul>
