@@ -1,11 +1,14 @@
 <section class="section_products">
     <h1>Lista de productos</h1>
     <ul>
-        {{#each products }}
-        <div >
-            <li> {{this.title}} </li>
-            <button type="button"><a href="http://localhost:8080/products/{{this._id}}">Comprar</a></button>
-        </div>
+        {{#each productos }}
+        <div>
+            <h2>{{title}}</h2>
+            <p>{{description}}</p>
+            <p>Precio: ${{price}}</p>
+            <p>Categoria: {{category}} </p>
+            <button> Agregar al Carrito </button>
+        </div>  
         {{/each}}
     </ul>
     <div class="prev-netxPage_buttons">
