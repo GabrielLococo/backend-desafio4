@@ -5,7 +5,7 @@ const PORT = 8080;
 require("./database.js");
 
 const productsRouter = require("./routes/products.router.js");
-const cartsRouter = require("./routes/carts.router.js");
+const cartsRouter = require("./routes/cart.router.js");
 const viewsRouter = require("./routes/views.router.js");
 
 //Middleware
@@ -24,8 +24,13 @@ app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
 
 
-io.on("connection",  async (socket) => {
-    console.log("New user ON");
+app.listen(PORT, () => {
+    console.log(`Listening on http://localhost:${PORT}`)
+})
+
+
+// io.on("connection",  async (socket) => {
+//     console.log("New user ON");
 
     // socket.emit("productos", await productManager.getProducts());    
 
@@ -54,18 +59,14 @@ io.on("connection",  async (socket) => {
 
 
     // Chat
-    socket.on("message", async data => {
+//     socket.on("message", async data => {
 
-        await MessageModel.create(data);
+//         await MessageModel.create(data);
 
-        const messages = await MessageModel.find();
-        console.log(messages);
-        io.sockets.emit("message", messages);
+//         const messages = await MessageModel.find();
+//         console.log(messages);
+//         io.sockets.emit("message", messages);
      
-    })
+//     })
     
-})
-
-server.listen(PORT, () => {
-    console.log(`Listening on http://localhost:${PORT}`)
-})
+// })
