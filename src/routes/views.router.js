@@ -1,21 +1,45 @@
-const express = require('express')
-const router = express.Router()
-const ProductModel = require("../dao/models/products.model.js")
+const express = require("express");
+const router = express.Router();
+const ProductManager = require("../dao/db/productManager-db.js");
+const CartManager = require("../dao/db/cartManager-db.js");
+const productManager = new ProductManager();
+const cartManager = new CartManager();
 
 //------------------------------
 
-module.exports = (productManager, cartManager) => {
 
-//INDEX
-router.get('/', async (req, res) => {
+//PRODUCTS
+router.get("/products", async (req, res) => {
     try {
-        const products = await productManager.getProducts()
-        res.render('index', { title: 'Index', products })
+       const { page = 1, limit = 2 } = req.query;
+       const productos = await productManager.getProducts({
+          page: parseInt(page),
+          limit: parseInt(limit)
+       });
+ 
+       const newArray = productos.docs.map(producto => {
+          const { _id, ...rest } = producto.toObject();
+          return rest;
+       });
+ 
+       res.render("products", {
+          productos: newArray,
+          hasPrevPage: productos.hasPrevPage,
+          hasNextPage: productos.hasNextPage,
+          prevPage: productos.prevPage,
+          nextPage: productos.nextPage,
+          currentPage: productos.page,
+          totalPages: productos.totalPages
+       });
+ 
     } catch (error) {
-        console.error('Error obteniendo los productos')
-        res.status(500).json({ error: 'Error en el servidor' })
+       console.error("Error al obtener productos", error);
+       res.status(500).json({
+          status: 'error',
+          error: "Error interno del servidor"
+       });
     }
-})
+ });
 
 //REAL TIME PRODUCTS
 router.get('/realtimeproducts', async (req, res) => {
@@ -37,52 +61,32 @@ router.get('/chat', async (req, res) => {
     }
 })
 
-//PRODUCTS
-router.get('/products', async (req, res) => {
-    const page = req.query.page || 1
-    const limit = 5
-
-    try {
-        const productsList = await ProductModel.paginate({}, { limit, page })
-
-        const productsFinalResult = productsList.docs.map(product => {
-            const { id, ...rest } = product.toObject()
-            return rest
-        })
-
-        res.render('products', {
-            title: 'Products List',
-            products: productsFinalResult,
-            hasPrevPage: productsList.hasPrevPage,
-            hasNextPage: productsList.hasNextPage,
-            prevPage: productsList.prevPage,
-            nextPage: productsList.nextPage,
-            currentPage: productsList.page,
-            totalPages: productsList.totalPages
-        })
-    } catch (error) {
-        console.log("Error en la paginacion ", error)
-        res.status(500).send('Error en el servidor' )
-    }
-})
 
 
 //CART
-router.get('/carts/:cid', async (req, res) => {
-    const cartId = req.params.cid
+router.get("/carts/:cid", async (req, res) => {
+    const cartId = req.params.cid;
+ 
     try {
-        const cart = await cartManager.getCartById(cartId)
-        if (!cart) {
-            console.error('No existe carrito con ese ID')
-            return cart
-        }
-        res.render('cart', { cartId, products: cart.products, title: 'Cart' })
-
+       const cart = await cartManager.getCartById(cartId);
+ 
+       if (!cart) {
+          console.log("No existe ese carrito con el id");
+          return res.status(404).json({ error: "Carrito no encontrado" });
+       }
+ 
+       const productsInCart = cart.products.map(item => ({
+          product: item.product.toObject(),
+          quantity: item.quantity
+       }));
+ 
+ 
+       res.render("carts", { productos: productsInCart });
     } catch (error) {
-        console.error('Error recuperando carrito', error)
-        res.status(500).json({ error: 'Error en el servidor' })
+       console.error("Error al obtener el carrito", error);
+       res.status(500).json({ error: "Error interno del servidor" });
     }
-})
+ });
 
-return router
-}
+
+module.exports = router
