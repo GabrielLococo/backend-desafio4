@@ -48,72 +48,85 @@ class CartManager {
 
     async clearCart(cartId) {
         try {
-            const cart = await CartModel.findById(cartId).lean().exec()
+            const cart = await CartModel.findByIdAndUpdate(
+                cartId,
+                { products: [] },
+                { new: true }
+            );
 
             if (!cart) {
-                console.error(`No existe el carrito con ese ID`)
-                return cartId
+                throw new Error('Carrito no encontrado')
             }
 
-            cart.products = []
-            await CartModel.findByIdAndUpdate(cartId, { products: cart.products }).exec()
+            return cart;
         } catch (error) {
-            console.error("Error limpiando el carrito", error)
+            console.error('Error al vaciar el carrito', error)
             throw error
         }
     }
 
     async deleteProductFromCart(cartId, productId) {
         try {
-            const updatedCart = await CartModel.findByIdAndUpdate(
-                cartId,
-                { $pull: { products: { product: productId } } }, 
-                { new: true } 
-            )
+            const cart = await CartModel.findById(cartId)
 
-            if (!updatedCart) {
-                console.error(`No existe carrito con ese ID`)
-                return null
+            if (!cart) {
+                throw new Error('Carrito no encontrado')
             }
 
-            return updatedCart
+            cart.products = cart.products.filter(item => item.product._id.toString() !== productId)
+
+            await cart.save()
+            return cart
         } catch (error) {
-            console.error("Error borrando el producto del carrito", error)
+            console.error('Error al eliminar el producto del carrito ', error)
             throw error
         }
     }
 
     async updateProductQuantityInCart(cartId, productId, newQuantity) {
         try {
-            const cart = await this.getCartById(cartId)
+            const cart = await CartModel.findById(cartId)
+
             if (!cart) {
-                console.error(`No existe un carrito con ese ID`)
-                return null
+               console.log('no existe un carrito con ese ID')
             }
 
-            const productToUpdate = cart.products.find(p => p.product.equals(productId))
-            if (!productToUpdate) {
-                console.error(`No se encontro un producto con ese ID en el carrito`)
-                return null
+            const productToUpdate = cart.products.findIndex(item => item.product._id.toString() === productId)
+
+            if (productToUpdate !== -1) {
+                cart.products[productToUpdate].quantity = newQuantity
+
+
+                cart.markModified('products')
+
+                await cart.save()
+                return cart
+            } else {
+                console.log('Producto no encontrado en el carrito')
             }
-
-            productToUpdate.quantity = newQuantity
-
-            await cart.save()
-            return cart
-
         } catch (error) {
-            console.error("Error modificando la cantidad de productos en el carrito", error)
-            throw error
+            console.error('Error al actualizar la cantidad del producto en el carrito', error);
+            throw error;
         }
     }
 
-    async updateCart(cartId, newProducts) {
+    async updateCart(cartId, updatedProducts) {
         try {
-            const updatedCart = await CartModel.findByIdAndUpdate(cartId, { products: newProducts }, { new: true })
-            return updatedCart
+            const cart = await CartModel.findById(cartId);
+
+            if (!cart) {
+                console.log('Carrito no encontrado');
+            }
+
+            cart.products = updatedProducts;
+
+            cart.markModified('products');
+
+            await cart.save();
+
+            return cart;
         } catch (error) {
-            console.error("Error actualizando carrito", error)
+            console.error('Error al actualizar el carrito', error);
             throw error;
         }
     }

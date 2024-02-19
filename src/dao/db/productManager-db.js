@@ -1,10 +1,10 @@
 const ProductModel = require('../models/products.model.js')
 
 class ProductManager {
-    async addProduct({ title, description, category, price, thumbnail, code, stock, status, thumbnails }) {
+    async addProduct({ title, description, price, img, code, stock, category, thumbnails }) {
         try {
 
-            if (!title || !description || !category || !price ||!thumbnail || !code || !stock || status == undefined || status == null) {
+            if (!title || !description || !price || !code || !stock || !category) {
                 console.log("Todos los campos son obligatorios");
                 return;
             }
@@ -19,12 +19,12 @@ class ProductManager {
             const newProduct = new ProductModel({
                 title,
                 description,
-                category,
                 price,
-                thumbnail,
+                img,
                 code,
                 stock,
-                status,
+                category,
+                status: true,
                 thumbnails: thumbnails || []
             })
 
@@ -37,12 +37,49 @@ class ProductManager {
         }
     }
 
-    async getProducts() {
+    async getProducts({ limit = 10, page = 1, sort, query } = {}) {
         try {
-            const productos = await ProductModel.find()
-            return productos
+            const skip = (page - 1) * limit;
+
+            let queryOptions = {};
+
+            if (query) {
+                queryOptions = { category: query };
+            }
+
+            const sortOptions = {};
+            if (sort) {
+                if (sort === 'asc' || sort === 'desc') {
+                    sortOptions.price = sort === 'asc' ? 1 : -1;
+                }
+            }
+
+            const productos = await ProductModel
+                .find(queryOptions)
+                .sort(sortOptions)
+                .skip(skip)
+                .limit(limit);
+
+            const totalProducts = await ProductModel.countDocuments(queryOptions);
+
+            const totalPages = Math.ceil(totalProducts / limit);
+            const hasPrevPage = page > 1;
+            const hasNextPage = page < totalPages;
+
+            return {
+                docs: productos,
+                totalPages,
+                prevPage: hasPrevPage ? page - 1 : null,
+                nextPage: hasNextPage ? page + 1 : null,
+                page,
+                hasPrevPage,
+                hasNextPage,
+                prevLink: hasPrevPage ? `/api/products?limit=${limit}&page=${page - 1}&sort=${sort}&query=${query}` : null,
+                nextLink: hasNextPage ? `/api/products?limit=${limit}&page=${page + 1}&sort=${sort}&query=${query}` : null,
+            };
         } catch (error) {
-            console.log('error al obtener los productos', error)
+            console.log("Error al obtener los productos", error);
+            throw error;
         }
     }
 
@@ -57,7 +94,7 @@ class ProductManager {
             console.log('producto encontrado!')
             return foundProduct
         } catch (error) {
-            console.log('error: no se pudo traer un producto por ir')
+            console.log('error: no se pudo traer un producto por id')
         }
     }
 
@@ -78,9 +115,9 @@ class ProductManager {
 
     async deleteProduct (id) {
         try {
-            const deletingProduct = await ProductModel.findByIdAndDelete(id)
+            const deletedProduct = await ProductModel.findByIdAndDelete(id)
 
-            if(!deletingProduct) {
+            if(!deletedProduct) {
                 console.log('error: no se encontro el producto para ser borrado')
                 return null
             }
