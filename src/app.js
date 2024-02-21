@@ -5,7 +5,7 @@ const PORT = 8080;
 require("./database.js");
 
 const productsRouter = require("./routes/products.router.js");
-const cartsRouter = require("./routes/cart.router.js");
+const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
 
 //Middleware
