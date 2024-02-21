@@ -10,7 +10,7 @@ const CartModel = require("../dao/models/carts.model.js");
 router.post('/', async (req, res) => {
     try {
         const newCart = await cartManager.createCart()
-        res.json({ newCart })
+        res.json(newCart)
     } catch (error) {
         console.error('Error creando un nuevo carrito', error)
         res.status(500).json({ error: 'Error en el servidor' })

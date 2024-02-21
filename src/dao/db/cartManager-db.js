@@ -3,7 +3,7 @@ const CartModel = require('../models/carts.model.js')
 class CartManager {
     async createCart(){
         try {
-            const newCart = new CartModel({products: []})
+            const newCart = new CartModel({ products: [] })
             await newCart.save()
             return newCart
         } catch (error) {

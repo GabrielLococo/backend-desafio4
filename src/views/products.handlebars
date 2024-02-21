@@ -2,8 +2,11 @@
     <h1>Lista de productos</h1>
     <ul>
         {{#each productos }}
-        <div>
+        <div class="conteinterProducts">
             <h2>{{title}}</h2>
+            <div class="conteinterProductImg">
+            <img class="productImg" src="{{img}}"></img>
+            </div>
             <p>{{description}}</p>
             <p>Precio: ${{price}}</p>
             <p>Categoria: {{category}} </p>
