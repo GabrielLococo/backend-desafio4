@@ -5,7 +5,6 @@ const cartManager = new CartManager();
 const CartModel = require("../dao/models/carts.model.js");
 
 
-
 // POST
 router.post('/', async (req, res) => {
     try {
@@ -43,12 +42,6 @@ router.post('/:cid/product/:pid', async (req, res) => {
     const quantity = req.body.quantity || 1
 
     try {
-        const verifyCartId = await cartManager.getCartById(cartId)
-        if (!verifyCartId) {
-            res.status(400).json({ error: 'No existe un carrito con ese ID' })
-            return cartId
-        }
-
         const updateCart = await cartManager.addProductToCart(cartId, productId, quantity)
         res.json(updateCart.products)
     } catch (error) {

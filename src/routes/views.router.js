@@ -6,11 +6,22 @@ const productManager = new ProductManager();
 const cartManager = new CartManager();
 
 //------------------------------
+
+//inicio
 router.get('/', async (req, res) => {
    try {
        res.render('index', { title: 'Inicio' })
    } catch (error) {
        console.error('Error obteniendo el index', error)
+       res.status(500).json({ error: 'Error en el servidor' })
+   }
+})
+
+router.get('/carts', async (req, res) => {
+   try {
+       res.render('carts', { title: 'carts' })
+   } catch (error) {
+       console.error('Error obteniendo el carrito', error)
        res.status(500).json({ error: 'Error en el servidor' })
    }
 })
