@@ -13,6 +13,12 @@ router.post("/login", async (req, res) => {
             //Login
             if (user.password === password) {
                 req.session.login = true;
+                req.session.user = {
+                    email: user.email,
+                    age: user.age,
+                    first_name: user.first_name,
+                    last_name: user.last_name
+                }
                 res.redirect('/products')
             } else {
                 res.status(401).send({ error: "Contraseña no valida" })
