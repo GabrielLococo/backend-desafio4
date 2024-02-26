@@ -9,11 +9,21 @@ const cartManager = new CartManager();
 
 //inicio
 router.get('/', async (req, res) => {
+   // try {
+   //     res.render('index', { title: 'Inicio' })
+   // } catch (error) {
+   //     console.error('Error obteniendo el index', error)
+   //     res.status(500).json({ error: 'Error en el servidor' })
+   // }
    try {
-       res.render('index', { title: 'Inicio' })
+      if(!req.session.login) { 
+      res.redirect('/login')
+      }else{
+         console.error('error redireccionando al login como primer requisito')
+      }
+      
    } catch (error) {
-       console.error('Error obteniendo el index', error)
-       res.status(500).json({ error: 'Error en el servidor' })
+      res.status(500).json({ error: 'Error en el servidor' })
    }
 })
 
@@ -34,7 +44,7 @@ router.get("/products", async (req, res) => {
           page: parseInt(page),
           limit: parseInt(limit)
        });
- 
+       
        const newArray = productos.docs.map(producto => {
           const { _id, ...rest } = producto.toObject();
           return rest;
@@ -47,7 +57,8 @@ router.get("/products", async (req, res) => {
           prevPage: productos.prevPage,
           nextPage: productos.nextPage,
           currentPage: productos.page,
-          totalPages: productos.totalPages
+          totalPages: productos.totalPages,
+          user: req.session.user
        });
  
     } catch (error) {
@@ -107,11 +118,13 @@ router.get("/carts/:cid", async (req, res) => {
  });
 
 
+//LOGIN
+
 // Ruta para el formulario de login
 router.get("/login", (req, res) => {
    // Verifica si el usuario ya está logueado y redirige a la página de perfil si es así
    if (req.session.login) {
-       return res.redirect("/profile");
+       return res.redirect("/products") //una vez logueado redirecciono a Products
    }
 
    res.render("login");

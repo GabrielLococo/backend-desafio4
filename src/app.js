@@ -118,7 +118,7 @@ app.get("/user", (req, res) => {
     if(req.session.user) {
         return res.send(`El usuario registrado es el siguiente: ${req.session.user} `);
     }
-    res.send("No tenemos un usuario registrado, vamos a morir");
+    res.send("No tenemos un usuario registrado");
 })
 
 app.listen(PORT, () => {

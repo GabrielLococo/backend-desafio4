@@ -4,7 +4,7 @@ const UserModel = require("../dao/models/user.model.js")
 
 //Login
 
-router.post("/sessionlogin", async (req, res) => {
+router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await UserModel.findOne({ email: email });
@@ -13,7 +13,7 @@ router.post("/sessionlogin", async (req, res) => {
             //Login
             if (user.password === password) {
                 req.session.login = true;
-                res.status(200).send({ message: "Loguin exitoso" })
+                res.redirect('/products')
             } else {
                 res.status(401).send({ error: "Contraseña no valida" })
             }

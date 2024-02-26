@@ -1,4 +1,9 @@
 <section class="section_products">
+    {{#if user}}
+    <div>
+        <p>Bienvenido!, {{user.first_name}} {{user.last_name}}!</p>
+    </div>
+    {{/if}}
     <h1>Lista de productos</h1>
     <ul>
         {{#each productos }}

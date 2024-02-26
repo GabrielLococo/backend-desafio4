@@ -8,13 +8,14 @@ router.post("/", async (req, res) => {
     const {first_name, last_name, email, password, age} = req.body; 
 
     try {
-        await UserModel.create({first_name, last_name, email, password, age});
+        await UserModel.create({first_name, last_name, email, password, age, rol:"user"});
 
-        res.status(200).send({message: "Usuario creado con exito!"});
+        res.redirect("/products");
 
     } catch (error) {
-        res.status(400).send({error: "Error al crear el usuario"});
+        res.status(400).send({error: "Error al crear el usuario", error});
     }
+
 })
 
 

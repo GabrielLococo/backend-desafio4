@@ -220,3 +220,15 @@ h2 {
     width: 70px;
     height: 70px;
 }
+
+/*login*/
+
+.loginForm, .registerForm {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+    width: 400px;
+}
