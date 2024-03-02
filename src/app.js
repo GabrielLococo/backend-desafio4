@@ -11,12 +11,13 @@ const fileStore = FileStore(session);
 const MongoStore = require("connect-mongo");
 const userRouter = require("./routes/user.router.js");
 const sessionRouter = require("./routes/sessions.router.js");
-
-
-
 const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
+
+//PASSPORT
+const passport = require("passport");
+const initializePassport = require("./config/passport.config.js");
 
 //Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -32,6 +33,10 @@ app.use(session({
         mongoUrl: "mongodb+srv://gabriellococosi:coderhouse@cluster0.6guqc3j.mongodb.net/ecommerce?retryWrites=true&w=majority", ttl: 100
     })
 }))
+//PASSPORT
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Handlebars
 app.engine("handlebars", exphbs.engine());
@@ -92,16 +97,16 @@ app.use("/api/sessions", sessionRouter);
 // })
 
 
-//-----LOGUIN
+//COOKIES
 
-app.get("/createCookie", (req, res) => {
-    res.cookie("cookie", "Esto es una cookie").send("Cookie creada con exito");
-})
+// app.get("/createCookie", (req, res) => {
+//     res.cookie("cookie", "Esto es una cookie").send("Cookie creada con exito");
+// })
 
 
-app.get("/deleteCookie", (req, res) => {
-    res.clearCookie("cookie").send("Cookie borrada con exito");
-})
+// app.get("/deleteCookie", (req, res) => {
+//     res.clearCookie("cookie").send("Cookie borrada con exito");
+// })
 
 //Login de usuario con Session: 
 

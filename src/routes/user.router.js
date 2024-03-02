@@ -1,6 +1,8 @@
-const express = require("express");
-const router = express.Router();
-const UserModel = require("../dao/models/user.model.js");
+const express = require("express")
+const router = express.Router()
+const UserModel = require("../dao/models/user.model.js")
+const { createHash } = require("../utils/hashBcrypt.js")
+const passport = require("passport")
 
 //Post para generar un usuario y almacenarlo en MongoDB
 
