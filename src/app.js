@@ -51,7 +51,27 @@ app.use("/api/users", userRouter);
 app.use("/api/sessions", sessionRouter);
 
 
+//Login de usuario con Session: 
 
+app.get("/login", (req, res) => {
+    let user = req.query.user; 
+
+    req.session.user = user; 
+    res.send("Usuario guardado por medio de query");
+})
+
+//Verificamos el usuario:
+
+app.get("/user", (req, res) => {
+    if(req.session.user) {
+        return res.send(`El usuario registrado es el siguiente: ${req.session.user} `);
+    }
+    res.send("No tenemos un usuario registrado");
+})
+
+app.listen(PORT, () => {
+    console.log(`Listening on http://localhost:${PORT}`)
+})
 
 
 // io.on("connection",  async (socket) => {
@@ -108,24 +128,3 @@ app.use("/api/sessions", sessionRouter);
 //     res.clearCookie("cookie").send("Cookie borrada con exito");
 // })
 
-//Login de usuario con Session: 
-
-app.get("/login", (req, res) => {
-    let user = req.query.user; 
-
-    req.session.user = user; 
-    res.send("Usuario guardado por medio de query");
-})
-
-//Verificamos el usuario:
-
-app.get("/user", (req, res) => {
-    if(req.session.user) {
-        return res.send(`El usuario registrado es el siguiente: ${req.session.user} `);
-    }
-    res.send("No tenemos un usuario registrado");
-})
-
-app.listen(PORT, () => {
-    console.log(`Listening on http://localhost:${PORT}`)
-})
