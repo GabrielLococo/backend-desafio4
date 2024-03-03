@@ -1,26 +1,12 @@
 const express = require("express")
 const router = express.Router()
 const UserModel = require("../dao/models/user.model.js")
-const { createHash } = require("../utils/hashBcrypt.js")
-const passport = require("passport")
+const { createHash } = require("../utils/hashBcrypt.js");
+const passport = require("passport");
 
-//Post para generar un usuario y almacenarlo en MongoDB
 
-// router.post("/", async (req, res) => {
-//     const {first_name, last_name, email, password, age} = req.body; 
 
-//     try {
-//         await UserModel.create({first_name, last_name, email, password, age, rol:"user"});
-
-//         res.redirect("/products");
-
-//     } catch (error) {
-//         res.status(400).send({error: "Error al crear el usuario", error});
-//     }
-
-// })
-
-//PASSPORT
+///VERSION PARA PASSPORT: 
 
 router.post("/", passport.authenticate("register", {
     failureRedirect: "/failedregister"

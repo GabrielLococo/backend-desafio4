@@ -79,7 +79,7 @@ const initializePassport = () => {
                 let newUser = {
                     first_name: profile._json.name,
                     last_name: "",
-                    age: 36,
+                    age: 20,
                     email: profile._json.email,
                     password: ""
                 }
