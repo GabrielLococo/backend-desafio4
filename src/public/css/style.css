@@ -231,4 +231,26 @@ h2 {
     align-content: center;
     margin: auto;
     width: 400px;
+    padding: 20px;
+    background-color: bisque;
+    border-radius: 10px;
+}
+
+.githubLink {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.797);
+    color: rgb(152, 151, 151);
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.linkToRegister{
+    text-decoration: none;
+    color: rgb(39, 39, 208);
+    cursor: pointer
 }
