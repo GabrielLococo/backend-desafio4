@@ -4,8 +4,6 @@ const UserModel = require("../dao/models/user.model.js")
 const { createHash } = require("../utils/hashBcrypt.js");
 const passport = require("passport");
 
-
-
 ///VERSION PARA PASSPORT: 
 
 router.post("/", passport.authenticate("register", {
