@@ -19,8 +19,12 @@ const userSchema = mongoose.Schema({
     }, 
 
     password: {
-        type: String, 
-        // required: true
+        type: String,
+        role:{
+            type: String,
+            default: "user"
+        },
+        unique: true
     },
 
     age : {
@@ -30,6 +34,7 @@ const userSchema = mongoose.Schema({
     
     rol: {
         type: String, 
+        default: "user"
         // required: true
     }
 });
