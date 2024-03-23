@@ -7,7 +7,7 @@ const passport = require("passport");
 ///VERSION PARA PASSPORT: 
 
 router.post("/", passport.authenticate("register", {
-    failureRedirect: "/failedregister"
+    failureRedirect: "users/failedregister"
 }), async (req, res) => {
     if(!req.user) return res.status(400).send({status: "error", message: "Credenciales invalidas"});
 
