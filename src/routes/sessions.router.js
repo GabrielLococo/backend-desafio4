@@ -82,4 +82,14 @@ router.get("/githubcallback", passport.authenticate("github", {failureRedirect: 
     res.redirect("/products");
 })
 
+//CURRENT
+
+router.get('/current', (req, res) => {
+    if (req.session && req.session.user) {
+      res.json(req.session.user)
+    } else {
+      res.status(401).json({ status: 'error', message: 'sin sesion activa' })
+    }
+  })
+
 module.exports = router
